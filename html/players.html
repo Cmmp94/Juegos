@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabla de Jugadores</title>
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+</head>
+<body>
+
+<h2>Jugadores</h2>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Acción</th>
+  </tr>
+</table>
+
+<div>
+  <h2>Agregar Jugador</h2>
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre">
+
+  <button onclick="agregarJugador()">Agregar</button>
+</div>
+
+<div>
+  <p>
+    <button onclick="window.location.href='inicio.html'">Volver al inicio</button>
+  </p>
+</div>
+
+<script>
+  function eliminarFila(button) {
+    var fila = button.parentNode.parentNode;
+    var nombre = fila.cells[0].textContent;
+    fila.parentNode.removeChild(fila);
+    eliminarNombre()
+  }
+
+  function agregarJugador() {
+    var nombre = document.getElementById("nombre").value;
+
+    if (nombre) {
+      var tabla = document.querySelector("table");
+      var nuevaFila = tabla.insertRow(tabla.rows.length);
+      var celdaNombre = nuevaFila.insertCell(0);
+      var celdaAccion = nuevaFila.insertCell(1);
+
+      celdaNombre.innerHTML = nombre;
+      celdaAccion.innerHTML = '<button onclick="eliminarFila(this)">Eliminar</button>';
+      guardarNombre(nombre);
+      document.getElementById("nombre").value = "";
+      
+    }
+  }
+
+  function guardarNombre(nombre) {
+    var nombresGuardados = JSON.parse(localStorage.getItem("nombres")) || [];
+    nombresGuardados.push(nombre);
+    localStorage.setItem("nombres", JSON.stringify(nombresGuardados));
+  }
+
+  function eliminarNombre(nombre) {
+    var nombresGuardados = JSON.parse(localStorage.getItem("nombres")) || [];
+    var indice = nombresGuardados.indexOf(nombre);
+    if (indice !== -1) {
+      nombresGuardados.splice(indice, 1);
+      localStorage.setItem("nombres", JSON.stringify(nombresGuardados));
+    }
+  }
+
+</script>
+
+</body>
+</html>

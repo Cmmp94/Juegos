@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elige una Película o Serie</title>
+</head>
+<body>
+
+<h1>Elige una Película o Serie</h1>
+
+<p>Próximo Jugador: <span id="proximoJugador"></span></p>
+
+<label for="elegirPelicula">Elegir Película o Serie:</label>
+<input type="text" id="elegirPelicula">
+<button onclick="jugar()">Jugar</button>
+
+<script>
+  var proximoJugador = localStorage.getItem("proximoJugador");
+  var proximoJugadorElement = document.getElementById("proximoJugador");
+  if (proximoJugador) {
+    proximoJugadorElement.textContent = proximoJugador;
+  }
+
+  function jugar() {
+    var inputPelicula = document.getElementById("elegirPelicula").value;
+    var peliculaActual = inputPelicula.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    localStorage.setItem("peliculaActual", peliculaActual);
+    window.location.href = "adivinarPelicula.html";
+  }
+</script>
+
+</body>
+</html>
